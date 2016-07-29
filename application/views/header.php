@@ -82,7 +82,7 @@
                             <div class="input-group custom-search-form" style="margin: 0px auto;">
                                 
                                 <img src="<?php echo base_url();?>resource/logo.png" width="60">
-                                </span>-->
+                                </span>
                             </div>
                             <!-- /input-group -->
                         </li>
