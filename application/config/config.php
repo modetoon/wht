@@ -22,7 +22,7 @@
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:81/wht/';
+$config['base_url'] = 'http://localhost:81/=skywave/wht/';
 
 /*
 |--------------------------------------------------------------------------
