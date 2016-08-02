@@ -38,16 +38,16 @@
 |
 */
 
-$route['menu/edit/(:any)'] = 'menu/add/$1';
-//$route['menu/delete/(:any)'] = 'menu/delete/$1';
+$route['user/edit/(:any)'] = 'user/add/$1';
+$route['user/delete/(:any)'] = 'user/delete/$1';
 
-$route['category/edit/(:any)'] = 'category/add/$1';
-$route['product/edit/(:any)'] = 'product/add/$1';
+$route['expensetype/edit/(:any)'] = 'expensetype/add/$1';
+$route['expensetype/delete/(:any)'] = 'expensetype/delete/$1';
+
+
 
 $route['default_controller'] = "home";
 $route['404_override'] = '';
-
-
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
