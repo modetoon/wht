@@ -41,10 +41,14 @@
 $route['user/edit/(:any)'] = 'user/add/$1';
 $route['user/delete/(:any)'] = 'user/delete/$1';
 
+$route['customer/edit/(:any)'] = 'customer/add/$1';
+$route['customer/delete/(:any)'] = 'customer/delete/$1';
+
 $route['expensetype/edit/(:any)'] = 'expensetype/add/$1';
 $route['expensetype/delete/(:any)'] = 'expensetype/delete/$1';
 
-
+$route['transaction/edit/(:any)'] = 'transaction/add/$1';
+$route['transaction/delete/(:any)'] = 'transaction/delete/$1';
 
 $route['default_controller'] = "home";
 $route['404_override'] = '';

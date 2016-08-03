@@ -71,7 +71,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="<?php echo site_url('admin/logoff');?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="<?php echo site_url('logoff');?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -130,13 +130,13 @@
                             <a href="#"><i class="fa fa-file-text"></i> Transaction<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="<?php echo site_url('category/add') ?>">Import Transaction</a>
+                                    <a href="<?php echo site_url('transaction/import') ?>">Import Transaction</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url('category/lists') ?>">Add Transaction</a>
+                                    <a href="<?php echo site_url('transaction/add') ?>">Add Transaction</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url('product/add') ?>">Transaction List</a>
+                                    <a href="<?php echo site_url('transaction/lists') ?>">Transaction List</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
