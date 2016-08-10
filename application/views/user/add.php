@@ -26,7 +26,7 @@
                                         <?php echo form_open('user/add') ?>
 
                                         <input type="hidden" name="ID" value="<?php echo (isset($result)) ? $result->UserID: ''; ?>">
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <div class="row">
                                                 <div class="col-lg-3"><label>User Type</label></div>
                                                 <div class="col-lg-9">
@@ -37,7 +37,7 @@
 													</select>
 												</div>
                                             </div>
-                                        </div>                                    
+                                        </div>    -->                                 
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-lg-3"><label>FullName</label></div>

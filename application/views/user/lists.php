@@ -1,11 +1,18 @@
 
         <div id="page-wrapper">
+
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><?php echo $title;?></h1>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
+
+            <div class="row">
+                <div class="col-lg-12 right">
+                    <p class="text-right"><button type="button" class="btn btn-success text-right" onclick="window.location.href='<?php echo site_url('user/add');?>';">Add User</button></p>
+                </div>
+            </div>
+
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
@@ -21,7 +28,6 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Role</th>
                                             <th>UserName</th>
                                             <th>FullName</th>
                                             <th>Email</th>
@@ -33,7 +39,6 @@
                                         foreach($result as $r){
                                             echo '<tr>
                                                 <td><input type="checkbox" value="'.$r->UserID.'"></td>
-                                                <td>'.$r->UserType.'</td>
                                                 <td>'.$r->UserName.'</td>
                                                 <td>'.$r->FullName.'</td>
                                                 <td>'.$r->Email.'</td>

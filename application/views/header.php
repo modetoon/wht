@@ -91,71 +91,25 @@
                             </div>
                             <!-- /input-group -->
                         </li>
-                        <li>
-                            <a href="<?php echo base_url();?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
+
                         <li class="active">
-                            <a href="#"><i class="fa fa-user"></i> User Management<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="<?php echo site_url('user/add') ?>">Add User</a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo site_url('user/lists') ?>">User List</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+                            <a href="<?php echo site_url('user/lists') ?>"><i class="fa fa-user"></i> User Management</a>
                         </li>
 						
                         <li class="active">
-                            <a href="#"><i class="fa fa-database"></i> Master Data<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="<?php echo site_url('customer/add') ?>">Add Customer</a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo site_url('customer/lists') ?>">Customer List</a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo site_url('expensetype/add') ?>">Add ExpenseType</a>
-                                </li>    
-                                <li>
-                                    <a href="<?php echo site_url('expensetype/lists') ?>">ExpenseType List</a>
-                                </li>                                
-                            </ul>
-                            <!-- /.nav-second-level -->
+                            <a href="<?php echo site_url('customer/lists') ?>"><i class="fa fa-group"></i> Customer Management</a>
                         </li>
 
                         <li class="active">
-                            <a href="#"><i class="fa fa-file-text"></i> Transaction<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="<?php echo site_url('transaction/import') ?>">Import Transaction</a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo site_url('transaction/add') ?>">Add Transaction</a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo site_url('transaction/lists') ?>">Transaction List</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+                            <a href="<?php echo site_url('expensetype/lists') ?>"><i class="fa fa-file-text-o"></i> Expense Type Management</a>
                         </li>
 
                         <li class="active">
-                            <a href="#"><i class="fa fa-file-text-o"></i> Report<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="<?php echo site_url('category/add') ?>">Report</a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo site_url('category/lists') ?>">Add Transaction</a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo site_url('product/add') ?>">Transaction List</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+                            <a href="<?php echo site_url('transaction/lists') ?>"><i class="fa fa-list-ul"></i> Transaction</a>
+                        </li>
+
+                        <li class="active">
+                            <a href="<?php echo site_url('report/list') ?>"><i class="fa fa-signal"></i> Report</a>
                         </li> 
 
                     </ul>

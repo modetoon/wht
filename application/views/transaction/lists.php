@@ -6,6 +6,16 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+
+            <div class="row">
+                <div class="col-lg-12 right">
+                    <p class="text-right">
+					<button type="button" class="btn btn-success text-right" onclick="window.location.href='<?php echo site_url('transaction/add');?>';">Add Transaction</button> 
+					<button type="button" class="btn btn-info text-right" onclick="window.location.href='<?php echo site_url('transaction/import');?>';">Import Transaction</button>
+					</p>
+                </div>
+            </div>
+
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
