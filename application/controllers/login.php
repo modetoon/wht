@@ -28,16 +28,18 @@ class Login extends CI_Controller {
             $this->load->view('login');
         } else {
             $_data = $this->Login_model->get_data($this->input->post('Username'));
+			
             if (count($_data) > 0) {
                 if ($_data->UserID != '') {
                     if ($_data->Password == $this->input->post('Password')) {
                         $data = array(
                             'user_id' => $_data->UserID,
                             'user_name' => $_data->UserName,
-                            'user_fullname_thai' => $_data->FullNameThai,
+                            'user_fullname_thai' => $_data->FullName,
                             'email' => $_data->Email,
                             'logged_in' => TRUE
                         );
+
                         $this->session->set_userdata($data);
                         redirect(site_url(''), 'refresh');
                     } else {
