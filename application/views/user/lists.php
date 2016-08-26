@@ -29,7 +29,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>UserName</th>
-                                            <th>FullName</th>
+                                            <th>FullName Thai</th>
                                             <th>Email</th>
                                             <th>Action</th>
                                         </tr>

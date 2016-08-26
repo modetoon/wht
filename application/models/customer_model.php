@@ -1,50 +1,49 @@
 <?php
 
-class Customer_model extends CI_Model {
-	
-	protected $table_name = 'customer';
-	protected $primary_key = 'CustomerID';
+class customer_model extends CI_Model {
+    protected $table_name = 'customer';
+    protected $primary_key = 'CustomerID';
 
-    function __construct()
-    {
+    public function __construct() {
         // Call the Model constructor
         parent::__construct();
-		$this->load->database();
+        $this->load->database();
     }
-    
-    function get_lists()
-    {
-        $sql = "SELECT * FROM ".$this->table_name." ORDER BY ".$this->primary_key." DESC"; 
-        $query = $this->db->query($sql);        
+    public function get_lists() {
+        $sql = "SELECT * FROM " . $this->table_name . " ORDER BY " . $this->primary_key . " DESC";
+        $query = $this->db->query($sql);
         return $query->result();
     }
-    
-    function get_data($id)
-    {
-
+    public function get_data($id) {
         $this->db->where($this->primary_key, $id);
         $this->db->limit(1);
-        return $this->db->get($this->table_name)->row();
-    } 
 
-    function delete($id){
+        return $this->db->get($this->table_name)->row();
+    }
+    public function delete($id) {
 
         $this->db->where($this->primary_key, $id);
         $this->db->delete($this->table_name);
     }
-
-    function insert_data($data){
-
-		$this->db->insert($this->table_name, $data);
-
+    public function insert_data($data) {
+        $this->db->insert($this->table_name, $data);
     }
-    
-    function update_data($data,$id){
-        $this->db->where($this->primary_key,$id);
-        $this->db->update($this->table_name, $data);     
+    public function update_data($data, $id) {
+        $this->db->where($this->primary_key, $id);
+        $this->db->update($this->table_name, $data);
     }
+    public function update_data_by_customer_code($data, $customerCode) {
+        $this->db->where("CustomerCode", $customerCode)
+                ->update($this->table_name, $data);
+    }
+    public function number_records_by_customer_code($customerCode) {
+        $this->db->where('CustomerCode', $customerCode);
 
-
+        return $this->db->get($this->table_name)->num_rows();
+    }
+    public function get_data_by_customer_code($customerCode) {
+        $this->db->where('CustomerCode', $customerCode);
+        
+        return $this->db->get($this->table_name)->row();
+    } 
 }
-
-?>

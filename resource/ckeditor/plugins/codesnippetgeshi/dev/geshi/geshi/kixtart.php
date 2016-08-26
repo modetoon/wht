@@ -107,7 +107,7 @@ $language_data = array (
             '@Domain',
             '@DOS',
             '@Error',
-            '@FullName',
+            '@FullNameThai',
             '@HomeDir',
             '@HomeDrive',
             '@HomeShr',

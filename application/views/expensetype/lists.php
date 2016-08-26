@@ -29,6 +29,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Expense Type Name</th>
+                                            <th>WHT Type</th>
                                             <th>Percent</th>
                                             <th>Action</th>
                                         </tr>
@@ -39,6 +40,7 @@
                                             echo '<tr>
                                                 <td><input type="checkbox" value="'.$r->ExpenseTypeID.'"></td>
                                                 <td>'.$r->ExpenseTypeName.'</td>
+                                                <td>'.$r->Wht_Type.'</td>
                                                 <td>'.$r->Percent.' %</td>
                                                 <td class="center">
                                                     <a href="'.site_url("expensetype/edit/$r->ExpenseTypeID").'" class="btn btn-warning btn-xs">Edit</a>&nbsp;

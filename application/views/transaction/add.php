@@ -1,36 +1,4 @@
-
-         <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header"><?php echo $title;?></h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <?php echo $title;?>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-8">
-
-                                        <?php $error =  validation_errors(); 
-                                            if($error){
-                                                echo '<div class="alert alert-danger">'.$error.'</div>';
-                                            }
-                                        ?>
-
-                                        <?php echo form_open('transaction/add') ?>
-
-                                        <input type="hidden" name="ID" value="<?php echo (isset($result)) ? $result->CustomerID: ''; ?>">
-
-                                       <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-lg-3"><label>PYMT DOC./ID.</label></div>
-                                                <div class="col-lg-9"><input class="form-control" name="DocNo" value="<?php echo (isset($result)) ? $result->DocNo: $DocNo; ?>" readonly></div>
+(isset($result)) ? $result->DocNo: $DocNo; ?>" readonly></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
