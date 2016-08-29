@@ -287,7 +287,6 @@
 						<th style="width:  5%; text-align: center">Date</th>
 						<th style="width:  5%; text-align: center">Amount</th>
 						<th style="width:  7%; text-align: center">Tax Amount</th>
-						<th style="width:  1%; text-align: center">view</th>
 					    </tr>
 					</thead>
 					<tbody>
@@ -327,11 +326,6 @@
 			    <td class="text-right">'.number_format($oTransaction->Amount, 2).'</td>
 			    <td class="text-right">'.number_format($oTransaction->TaxAmount, 2).'</td>
 		';
-		if (file_exists($excelFile)) {
-		    $result .= '<td class="text-center"><a href="<?php echo $excelUrl; ?>"><i class="btn btn-success fa fa-file-excel-o" style="cursor: grab;" aria-hidden="true"></i></a></td>';
-		} else {
-		    $result .= '<td class="text-center">-</td>';
-		}
 
 		$result .= '</tr>';
 	    }
@@ -401,6 +395,9 @@
 	    $totalAmount = 0;
 	    $totalTaxAmount = 0;
 	    foreach($transactions as $transaction) {
+		$totalAmount += $transaction->Amount;
+		$totalTaxAmount += $transaction->TaxAmount;
+
 		$oPHPExcel->getActiveSheet()->setCellValue('A'.$i, $transaction->DocNo);
 		$oPHPExcel->getActiveSheet()->setCellValue('B'.$i, $transaction->TransactionDate);
 		$oPHPExcel->getActiveSheet()->setCellValue('C'.$i, $transaction->FullNameThai);
@@ -413,6 +410,13 @@
 
 		$i++;
 	    }
+
+	    $i++;
+	    $oPHPExcel->getActiveSheet()->setCellValue('D'.$i, 'Total');
+	    $oPHPExcel->getActiveSheet()->setCellValue('H'.$i, $totalAmount);
+	    $oPHPExcel->getActiveSheet()->setCellValue('I'.$i, $totalTaxAmount);
+
+
 
 	    $fileName = 'wht-summary-'.date("Y-m-d").'.xlsx';
 	    $outputFile = $outputPath.$fileName;
