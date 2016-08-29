@@ -16,19 +16,20 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <?php echo $title; ?>
+		    <?php echo $title; ?>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <form enctype="multipart/form-data" method="post" action="<?php echo base_url('Transaction/processImport') ?>">
-<!--                        <label class="custom-file-upload" for="file-upload" syle="border: 1px;">
-                            <i>
-                                <img width="25" src="<?php echo base_url('/assets/images') ?>/upload.png">
-                            </i>
-                            Upload your excel file here
-                        </label>-->
+			<!--                        <label class="custom-file-upload" for="file-upload" syle="border: 1px;">
+						    <i>
+							<img width="25" src="<?php echo base_url('/assets/images') ?>/upload.png">
+						    </i>
+						    Upload your excel file here
+						</label>-->
                         <input style="display: inline;" id="file-upload" type="file" name="file">
-                        <input class="btn btn-primary" type="submit" value="Import" name="submit">
+                        <input class="btn btn-primary" type="submit" value="Import" id="submit" name="submit">
+			<span id="waiting" style="color: red;"></span>
                     </form>
                     <!-- /.panel-body -->
                 </div>
@@ -62,13 +63,15 @@
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        $('#ListTable').DataTable({
-            responsive: true
+            $('#ListTable').DataTable({
+                responsive : true
+            });
+            $('#submit').click(function () {
+                $('#waiting').html("<strong>Please wait...</strong>");
+            });
         });
-
-    });
 </script>
 
 </body>

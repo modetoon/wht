@@ -44,10 +44,10 @@
 			<div class="row">
 			    <div class="col-lg-offset-1 col-lg-3"><label class="form-control" style="border: 0px; box-shadow: none;">Document Number</label></div>
 			    <div class="col-lg-3">
-				<input class="form-control" id="start_doc_no" name="start_doc_no" placeholder="Start Document Number" value="<?php echo $startDocNo ?>">
+				<input class="form-control" id="start_doc_no" name="start_doc_no" placeholder="Start Document Number">
 			    </div>
 			    <div class="col-lg-3">
-				<input class="form-control" id="end_doc_no" name="end_doc_no" placeholder="End Document Number" value="<?php echo $endDocNo ?>">
+				<input class="form-control" id="end_doc_no" name="end_doc_no" placeholder="End Document Number">
 			    </div>
 			</div>
 			<div class="row">
@@ -149,5 +149,8 @@
                     }
                 });
             });
+            $('#ListTable').DataTable({
+            });
+
         });
 </script>

@@ -31,15 +31,12 @@
 	    $startDate = date("Y-m-d");
 	    $endDate = date("Y-m-d");
 	    $oCustomers = $this->customer_model->get_lists('FullNameThai');
-	    $docNos = $this->transaction_model->get_first_last_doc_no_by_date($startDate, $endDate);
 
 	    $data = array(
 		'title' => 'Print Withholding Tax',
 		'startDate' => $startDate,
 		'endDate' => $endDate,
-		'oCustomers' => $oCustomers,
-		'startDocNo' => $docNos['startDocNo'],
-		'endDocNo' => $docNos['endDocNo']
+		'oCustomers' => $oCustomers
 	    );
 
 	    $this->load->view('header', $data);
@@ -209,6 +206,7 @@
 	    foreach($oTransactions as $oTransaction) {
 		$fileName = 'wht-'.$oTransaction->CustomerCode.'-'.$oTransaction->TransactionDate.'.xlsx';
 		$excelUrl = base_url('print_wht'.'/'.$fileName);
+		
 		$excelFile = $outputPath.$fileName;
 
 		$i++;
@@ -224,7 +222,7 @@
 			    <td class="text-right">'.number_format($oTransaction->TaxAmount, 2).'</td>
 		';
 		if (file_exists($excelFile)) {
-		    $result .= '<td class="text-center"><a href="<?php echo $excelUrl; ?>"><i class="btn btn-success fa fa-file-excel-o" style="cursor: grab;" aria-hidden="true"></i></a></td>';
+		    $result .= '<td class="text-center"><a href="'.$excelUrl.'"><i class="btn btn-success fa fa-file-excel-o" style="cursor: grab;" aria-hidden="true"></i></a></td>';
 		} else {
 		    $result .= '<td class="text-center">-</td>';
 		}
@@ -333,7 +331,7 @@
 	    if (count($oTransactions) == 0) {
 		$result .= '
 			<tr>
-			    <td colspan="5" class="text-center"><--- No Data Found ---><td>
+			    <td colspan="6" class="text-center"><--- No Data Found ---><td>
 			</tr>
 		';
 	    }
@@ -342,7 +340,7 @@
 					</tbody>
 	    ';
 
-	    if (count($oTransaction) != 0) {
+	    if (count($oTransactions) != 0) {
 		$result .= '
 				<tfoot>
 				    <tr>
@@ -429,4 +427,3 @@
 	    echo $result;
 	}
     }
-    

@@ -136,5 +136,8 @@
                     }
                 });
             });
+            $('#ListTable').DataTable({
+                responsive : true
+            });
         });
 </script>

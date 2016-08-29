@@ -116,77 +116,84 @@
 	    for($row = 2; $row <= $maxRow; $row++) {
 		$rowData = $sheet->rangeToArray('A'.$row.':'.$maxColumn.$row, NULL, TRUE, FALSE);
 
-		$customerCode = $rowData[0][0];
-		$customerThaiName = $rowData[0][1];
-		$date = date($format = "Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($rowData[0][2]));
-		$whtType = $rowData[0][3];
-		$condition = $rowData[0][4];
-		$cnAmount = $rowData[0][5];
-		$remark = $rowData[0][6];
-		$customerEnglishName = $rowData[0][7];
-		$address = $rowData[0][8];
+		if (!empty($rowData)) {
+		    $customerCode = $rowData[0][0];
+		    $customerThaiName = $rowData[0][1];
+		    $date = date($format = "Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($rowData[0][2]));
+		    $whtType = $rowData[0][3];
+		    $condition = $rowData[0][4];
+		    $cnAmount = $rowData[0][5];
+		    $remark = $rowData[0][6];
+		    $customerEnglishName = $rowData[0][7];
+		    $address = $rowData[0][8];
 
-		// Insert New Customer or Update Customer
-		// --------------------------------------
-		$customer = $this->customer_model->get_data_by_customer_code($customerCode);
-		if (empty($customer)) {
-		    $data = array(
-			"CustomerCode" => "$customerCode",
+		    // Insert New Customer or Update Customer
+		    // --------------------------------------
+		    if ($customerCode != '') {
+			$customer = $this->customer_model->get_data_by_customer_code($customerCode);
+			if (empty($customer)) {
+			    $data = array(
+				"CustomerCode" => "$customerCode",
 //                    "Type" => "",
-			"FullNameThai" => "$customerThaiName",
-			"FullNameEnglish" => "$customerEnglishName",
+				"FullNameThai" => "$customerThaiName",
+				"FullNameEnglish" => "$customerEnglishName",
 //                    "IDCard" => "",
 //                    "TaxNumber" => "",
 //                    "Phone" => "",
 //                    "Email" => "",
-			"Address" => "$address",
-			"CreatedDate" => now(),
-			"CreatedBy" => ""
+				"Address" => "$address",
+				"CreatedDate" => now(),
+				"CreatedBy" => ""
+			    );
+
+			    $this->customer_model->insert_data($data);
+			} else {
+			    $data = array();
+			    if ($customer->CustomerCode == "")
+				$data['CustomerCode'] = "$customerCode";
+			    if ($customer->FullNameThai == "")
+				$data['FulllNameThai'] = "$customerThaiName";
+			    if ($customer->FullNameEnglish == "")
+				$data['FullNameEnglish'] = "$customerEnglishName";
+			    if ($customer->Address == "")
+				$data['Address'] = "$address";
+
+			    if (!empty($data))
+				$this->customer_model->update_data_by_customer_code($data, $customerCode);
+			}
+		    }
+		    // <----------------   End of Insert or Update Customer  -------------------->
+		    // 
+		    // Insert into Transaction
+		    // ------------------------
+
+		    $customer = $this->customer_model->get_data_by_customer_code($customerCode);
+		    $customerId = (empty($customer)) ? 0 : $customer->CustomerID;
+
+		    $expenseType = $this->expensetype_model->get_data_by_wht_type($whtType);
+		    $taxPercent = 0;
+		    $expenseTypeId = 0;
+		    if (!empty($expenseType)) {
+			$taxPercent = $expenseType->Percent;
+			$expenseTypeId = $expenseType->ExpenseTypeID;
+		    }
+		    $amount = round((((100 - $taxPercent) * $cnAmount) / 100), 2);
+		    $taxAmount = $cnAmount - $amount;
+		    $docNo = $this->Transaction_model->get_docno();
+		    $data = array(
+			"DocNo" => $docNo,
+			"CustomerID" => $customerId,
+			"TransactionDate" => $date,
+			"Amount" => $cnAmount,
+			"TaxAmount" => $taxAmount,
+			"NetAmount" => $amount,
+			"ExpenseTypeID" => $expenseTypeId,
+			"TaxPercent" => $taxPercent,
+			"Condition" => $condition
 		    );
 
-		    $this->customer_model->insert_data($data);
-		    
-		} else {
-		    $data = array();
-		    if ($customer->CustomerCode == "") $data['CustomerCode'] = "$customerCode";
-		    if ($customer->FullNameThai == "") $data['FulllNameThai'] = "$customerThaiName";
-		    if ($customer->FullNameEnglish == "") $data['FullNameEnglish'] = "$customerEnglishName";
-		    if ($customer->Address == "") $data['Address'] = "$address";
-
-		    if (!empty($data)) $this->customer_model->update_data_by_customer_code($data, $customerCode);
+		    $this->Transaction_model->insert_data($data);
 		}
-		// <----------------   End of Insert or Update Customer  -------------------->
-		// 
-		// Insert into Transaction
-		// ------------------------
-
-		$customer = $this->customer_model->get_data_by_customer_code($customerCode);
-		$customerId = (empty($customer)) ? 0 : $customer->CustomerID;
-
-		$expenseType = $this->expensetype_model->get_data_by_wht_type($whtType);
-		$taxPercent = 0;
-		$expenseTypeId = 0;
-		if (!empty($expenseType)) {
-		    $taxPercent = $expenseType->Percent;
-		    $expenseTypeId = $expenseType->ExpenseTypeID;
-		}
-		$amount = round((((100 - $taxPercent) * $cnAmount) / 100), 2);
-		$taxAmount = $cnAmount - $amount;
-		$docNo = $this->Transaction_model->get_docno();
-		$data = array(
-		    "DocNo" => $docNo,
-		    "CustomerID" => $customerId,
-		    "TransactionDate" => $date,
-		    "Amount" => $cnAmount,
-		    "TaxAmount" => $taxAmount,
-		    "NetAmount" => $amount,
-		    "ExpenseTypeID" => $expenseTypeId,
-		    "TaxPercent" => $taxPercent,
-		    "Condition" => $condition
-		);
-
-		$this->Transaction_model->insert_data($data);
-
 		// <----------------  End of Insert Transaction ----------------------------->
 	    }
 

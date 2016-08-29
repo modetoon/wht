@@ -11,7 +11,7 @@
 	    $this->load->database();
 	}
 	public function get_lists() {
-	    $sql = "SELECT * FROM " . $this->table_name . " ORDER BY " . $this->primary_key . " DESC";
+	    $sql = "SELECT * FROM ".$this->table_name." ORDER BY ".$this->primary_key." DESC";
 	    $query = $this->db->query($sql);
 	    return $query->result();
 	}
@@ -40,7 +40,7 @@
 	    $html .= '<select class="form-control" name="CustomerID" id="CustomerID"><option value="">Please select';
 	    foreach($q->result() as $r) {
 		$cls = ($selected == $r->CustomerID) ? 'selected' : '';
-		$html .= '<option value="' . $r->CustomerID . '" ' . $cls . '>' . $r->FullNameThai;
+		$html .= '<option value="'.$r->CustomerID.'" '.$cls.'>'.$r->FullNameThai;
 	    }
 	    $html .= '</select>';
 	    return $html;
@@ -54,7 +54,7 @@
 	    $arrTmp = explode('|', $selected);
 	    foreach($q->result() as $r) {
 		$cls = ($arrTmp[0] == $r->ExpenseTypeID) ? 'selected' : '';
-		$html .= '<option value="' . $r->ExpenseTypeID . '|' . $r->Percent . '" ' . $cls . '>' . $r->ExpenseTypeName . ' (' . $r->Percent . ')';
+		$html .= '<option value="'.$r->ExpenseTypeID.'|'.$r->Percent.'" '.$cls.'>'.$r->ExpenseTypeName.' ('.$r->Percent.')';
 	    }
 	    $html .= '</select>';
 	    return $html;
@@ -63,7 +63,7 @@
 	    $nums_row = $this->db->count_all($this->table_name);
 	    $thisYear2Digit = date('y') + 43;
 	    if ($nums_row > 0) {
-		$query = $this->db->query("SELECT DocNo FROM " . $this->table_name . " ORDER BY TransactionID DESC LIMIT 0,1");
+		$query = $this->db->query("SELECT DocNo FROM ".$this->table_name." ORDER BY TransactionID DESC LIMIT 0,1");
 		if ($query->num_rows() > 0) {
 		    $row = $query->row_array();
 		    $DocNo = $row['DocNo'];
@@ -71,12 +71,12 @@
 		    $max_transaction_id = (int)$arrTmp[1];
 		    $max_transaction_id++;
 		    $transaction_id = sprintf('%05d', $max_transaction_id);
-		    $transaction_id = $thisYear2Digit . '/' . $transaction_id;
+		    $transaction_id = $thisYear2Digit.'/'.$transaction_id;
 		}
 	    } else {
 		$max_transaction_id = 1;
 		$transaction_id = sprintf('%05d', $max_transaction_id);
-		$transaction_id = $thisYear2Digit . '/' . $transaction_id;
+		$transaction_id = $thisYear2Digit.'/'.$transaction_id;
 	    }
 	    return $transaction_id;
 	}
@@ -88,19 +88,20 @@
 
 	    $sql = "   SELECT      `DocNo`   ";
 	    $sql .= "   FROM        `transaction` ";
-	    $sql .= "   WHERE       `TransactionDate` >= '" . $startDate . "'";
-	    $sql .= "   AND         `TransactionDate` <= '" . $endDate . "'";
+	    $sql .= "   WHERE       `TransactionDate` >= '".$startDate."'";
+	    $sql .= "   AND         `TransactionDate` <= '".$endDate."'";
+	    $sql .= "	AND	    `Status` = 1";
 	    $sql .= "   ORDER BY    DocNo";
 	    $sql_desc = " DESC ";
 	    $sql_asc = " ASC ";
 	    $sql_limit = " LIMIT 1";
 
-	    $lastSql = $sql . $sql_asc . $sql_limit;
+	    $lastSql = $sql.$sql_asc.$sql_limit;
 	    $query = $this->db->query($lastSql);
 	    if ($query->num_rows() > 0)
 		$results['startDocNo'] = $query->row()->DocNo;
 
-	    $lastSql = $sql . $sql_desc . $sql_limit;
+	    $lastSql = $sql.$sql_desc.$sql_limit;
 	    $query = $this->db->query($lastSql);
 	    if ($query->num_rows() > 0)
 		$results['endDocNo'] = $query->row()->DocNo;
@@ -117,21 +118,23 @@
 		'expense_type.ExpenseTypeID', 'expense_type.ExpenseTypeName', 'expense_type.Wht_Type'
 	    );
 	    $this->db->select($selection)
+		    ->where('transaction.Status', 1)
 		    ->join('customer', 'transaction.CustomerID = customer.CustomerID')
 		    ->join('expense_type', 'transaction.ExpenseTypeID = expense_type.ExpenseTypeID');
-	    
-	    if ($mode == 'CreateExcel') $this->db->where('CreatedExcel', '0');
+
+	    if ($mode == 'CreateExcel')
+		$this->db->where('CreatedExcel', '0');
 
 	    if ($startDate != '')
 		$this->db->where('transaction.TransactionDate >= ', $startDate);
 	    if ($endDate != '')
 		$this->db->where('transaction.TransactionDate <= ', $endDate);
-	    if (!empty($customerId))
-	    $this->db->where('transaction.CustomerID', $customerId);
+	    if (($customerId != '0') AND ( strtoupper($customerId) != 'ALL'))
+		$this->db->where('transaction.CustomerID', $customerId);
 	    if (!empty($startDocNo))
-	    $this->db->where('transaction.DocNo >= ', $startDocNo);
+		$this->db->where('transaction.DocNo >= ', $startDocNo);
 	    if (!empty($endDocNo))
-	    $this->db->where('transaction.DocNo <= ', $endDocNo);
+		$this->db->where('transaction.DocNo <= ', $endDocNo);
 
 	    return $this->db->get($this->table_name)->result();
 	}
@@ -144,16 +147,18 @@
 			JOIN		customer c on c.CustomerID = t.CustomerID
 			JOIN		expense_type e on e.ExpenseTypeID = t.ExpenseTypeID
 			WHERE		t.TransactionDate >= '".$startDate."' AND t.TransactionDate <= '".$endDate."'
+			AND		t.Status = 1
 	    ";
-	    
-	    if ($customerId != 'All') $sql .= "	AND		t.CustomerID = ". $customerId;
-			
+
+	    if ($customerId != 'All')
+		$sql .= "	AND		t.CustomerID = ".$customerId;
+
 	    $sql .= "
 			ORDER BY	c.FullNameThai
 	    ";
-	    
+
 	    $query = $this->db->query($sql);
-	    
+
 	    return $query->result();
 	}
 	public function update_created_excel($data, $transactionId) {

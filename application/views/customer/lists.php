@@ -21,7 +21,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <?php echo $title; ?>
+		    <?php echo $title; ?>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -35,25 +35,24 @@
                                     <th style="width:25%;">Thai Name</th>
                                     <th style="width:15%;">ID Card</th>
                                     <th style="width:15%;">Tax Number</th>
-                                     <th style="text-align:center;width:8%;">Action</th>
+				    <th style="text-align:center;width:8%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                
-                                foreach ($result as $r) {
-                                    echo '<tr>
-                                                <td><input type="checkbox" value="' . $r->CustomerID . '"></td>
+				<?php
+				    foreach($result as $r) {
+					echo '<tr>
+                                                <td><input type="checkbox" value="'.$r->CustomerID.'"></td>
                                                 <td>'.$r->CustomerCode.'</td>
                                                 <td>'.$r->FullNameThai.'</td>
                                                 <td>'.$r->IDCard.'</td>
                                                 <td>'.$r->TaxNumber.'</td>
                                                 <td  style="text-align:center;">
-                                                    <a href="' . site_url("customer/edit/$r->CustomerID") . '" class="btn btn-warning btn-xs">Edit</a>
+                                                    <a href="'.site_url("customer/edit/$r->CustomerID").'" class="btn btn-warning btn-xs">Edit</a>
                                                 </td>
                                             </tr>';
-                                }
-                                ?>
+				    }
+				?>
 
                             </tbody>
                         </table>
@@ -92,14 +91,12 @@
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
-                    $(document).ready(function () {
-
-                        $('#ListTable').DataTable({
-                            responsive: true,
-							"iDisplayLength": 100
-                        });
-
-                    });
+    $(document).ready(function () {
+	$('#ListTable').DataTable({
+	    responsive : true,
+	    "iDisplayLength" : 100
+	});
+    });
 </script>
 
 </body>
