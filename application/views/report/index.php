@@ -18,6 +18,8 @@
                         <div class="col-lg-4">
                             <ul>
                                 <li><a href="<?php echo base_url('Report/whtCriteria') ?>">Withhoding Tax</a></li>
+                                <li><a href="<?php echo base_url('Report/summaryCriteria') ?>">Summary Report</a></li>
+                                <li><a href="<?php echo base_url('Report/cancelreissue') ?>">Cancel/Re-Issuance</a></li>
                             </ul>
                         </div>
                     </div>

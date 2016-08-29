@@ -16,13 +16,13 @@
 			    <div class="col-lg-offset-1 col-lg-3"><label class="form-control" style="border: 0px; box-shadow: none;">Document Date</label></div>
 			    <div class="col-lg-3">
 				<div class="input-group">
-				    <input class="form-control" id="start_date" name="start_date" placeholder="Start Date" value="<?php echo $startDate ?>">
+				    <input class="form-control" id="start_date" name="start_date" placeholder="Start Date">
 				    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></i></span>
 				</div>
 			    </div>
 			    <div class="col-lg-3">
 				<div class="input-group">
-				    <input class="form-control" id="end_date" name="end_date" placeholder="End Date" value="<?php echo $endDate ?>">
+				    <input class="form-control" id="end_date" name="end_date" placeholder="End Date">
 				    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></i></span>
 				</div>
 			    </div>
@@ -32,21 +32,13 @@
 			    <div class="col-lg-6">
 				<select class="form-control" id="customer_id" name="customer_id">
 				    <option value="0">Please select customer</option>
+				    <option value="1">All Customers</option>
 				    <?php
 					foreach($oCustomers as $oCustomer) {
 					    echo "<option value='".$oCustomer->CustomerID."'>".$oCustomer->CustomerCode." : ".$oCustomer->FullNameThai."</option>";
 					}
 				    ?>
 				</select>
-			    </div>
-			</div>
-			<div class="row">
-			    <div class="col-lg-offset-1 col-lg-3"><label class="form-control" style="border: 0px; box-shadow: none;">Document Number</label></div>
-			    <div class="col-lg-3">
-				<input class="form-control" id="start_doc_no" name="start_doc_no" placeholder="Start Document Number" value="<?php echo $startDocNo ?>">
-			    </div>
-			    <div class="col-lg-3">
-				<input class="form-control" id="end_doc_no" name="end_doc_no" placeholder="End Document Number" value="<?php echo $endDocNo ?>">
 			    </div>
 			</div>
 			<div class="row">
@@ -108,13 +100,11 @@
             $('#search').click(function () {
                 $.ajax({
                     type : "post",
-                    url : "<?php echo base_url('Report/whtList') ?>",
+                    url : "<?php echo base_url('Report/sumaryList') ?>",
                     data : {
                         start_date : $("#start_date").val(),
                         end_date : $("#end_date").val(),
-                        customer_id : $("#customer_id").val(),
-                        start_doc_no : $("#start_doc_no").val(),
-                        end_doc_no : $("#end_doc_no").val()
+                        customer_id : $("#customer_id").val()
                     },
                     dataType : "text",
                     beforeSend : function () {
@@ -129,13 +119,11 @@
             $('#gen_doc').click(function () {
                 $.ajax({
                     type : "post",
-                    url : "<?php echo base_url('Report/processPrintWht') ?>",
+                    url : "<?php echo base_url('Report/processPrintSummary') ?>",
                     data : {
                         start_date : $("#start_date").val(),
                         end_date : $("#end_date").val(),
-                        customer_id : $("#customer_id").val(),
-                        start_doc_no : $("#start_doc_no").val(),
-                        end_doc_no : $("#end_doc_no").val()
+                        customer_id : $("#customer_id").val()
                     },
                     dataType : "text",
                     beforeSend : function () {
