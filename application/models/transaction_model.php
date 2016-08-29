@@ -137,11 +137,12 @@
 	}
 	public function get_summary_data_by_customer($startDate, $endDate, $customerId) {
 	    $sql = "
-			SELECT		t.CustomerID, t.Amount, t.TaxAmount,
-					c.FullNameThai, c.IDCard, c.CustomerCode,
-					t.DocNo, t.TransactionDate
+			SELECT		t.CustomerID, t.Amount, t.TaxAmount, t.Condition, t.DocNo, t.TransactionDate,
+					c.FullNameThai, c.TaxNumber, c.CustomerCode, c.Address,
+					e.ExpenseTypeName
 			FROM		transaction t
 			JOIN		customer c on c.CustomerID = t.CustomerID
+			JOIN		expense_type e on e.ExpenseTypeID = t.ExpenseTypeID
 			WHERE		t.TransactionDate >= '".$startDate."' AND t.TransactionDate <= '".$endDate."'
 	    ";
 	    
@@ -151,8 +152,8 @@
 			ORDER BY	c.FullNameThai
 	    ";
 	    
-	    $query = $this->db->query($sql);	
-
+	    $query = $this->db->query($sql);
+	    
 	    return $query->result();
 	}
 	public function update_created_excel($data, $transactionId) {

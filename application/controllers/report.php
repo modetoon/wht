@@ -282,7 +282,7 @@
 					    <tr>
 						<th style="width:  1%; text-align: center">No</th>
 						<th style="width: 25%; text-align: center">Customer</th>
-						<th style="width: 10%; text-align: center">ID Card</th>
+						<th style="width: 10%; text-align: center">Tax Amount</th>
 						<th style="width:  5%; text-align: center">DocNo</th>
 						<th style="width:  5%; text-align: center">Date</th>
 						<th style="width:  5%; text-align: center">Amount</th>
@@ -321,7 +321,7 @@
 			<tr>
 			    <td class="text-right">'.$i.'</td>
 			    <td>'.$oTransaction->CustomerCode." : ".$oTransaction->FullNameThai.'</td>
-			    <td class="text-center">'.$oTransaction->IDCard.'</td>
+			    <td class="text-center">'.$oTransaction->TaxNumber.'</td>
 			    <td class="text-center">'.$oTransaction->DocNo.'</td>
 			    <td class="text-center">'.$oTransaction->TransactionDate.'</td>
 			    <td class="text-right">'.number_format($oTransaction->Amount, 2).'</td>
@@ -347,12 +347,12 @@
 	    $result .= '
 					</tbody>
 	    ';
-	    
+
 	    if (count($oTransaction) != 0) {
 		$result .= '
 				<tfoot>
 				    <tr>
-					<td class="text-left" colspan="5">Total</d>
+					<td class="text-left" colspan="5"><strong>Total</strong></d>
 					<td class="text-right"><strong>'.number_format($totalAmount, 2).'</strong></d>
 					<td class="text-right"><strong>'.number_format($totalTaxAmount, 2).'</strong></d>
 				    </tr>
@@ -360,7 +360,7 @@
 		';
 	    }
 
-	    
+
 	    $result .= '
 				    </table>
 				</div>
@@ -395,72 +395,32 @@
 	    $outputPath .= 'print_summary'.'\\';
 
 	    $transactions = $this->transaction_model->get_summary_data_by_customer($startDate, $endDate, $customerId);
+
 	    $base_row = 2;
 	    $i = $base_row + 1;
+	    $totalAmount = 0;
+	    $totalTaxAmount = 0;
 	    foreach($transactions as $transaction) {
-		$fileName = 'wht-'.$transaction->CustomerCode.'.xlsx';
-		$outputFile = $outputPath.$fileName;
-
 		$oPHPExcel->getActiveSheet()->setCellValue('A'.$i, $transaction->DocNo);
 		$oPHPExcel->getActiveSheet()->setCellValue('B'.$i, $transaction->TransactionDate);
 		$oPHPExcel->getActiveSheet()->setCellValue('C'.$i, $transaction->FullNameThai);
 		$oPHPExcel->getActiveSheet()->setCellValue('D'.$i, $transaction->Address);
 		$oPHPExcel->getActiveSheet()->setCellValue('E'.$i, $transaction->TaxNumber);
-		$oPHPExcel->getActiveSheet()->setCellValue('F'.$i, $transaction->);	// ประเภทเงินได้
-		$oPHPExcel->getActiveSheet()->setCellValue('G'.$i, $transaction->);	// เงื่อนไข
+		$oPHPExcel->getActiveSheet()->setCellValue('F'.$i, $transaction->ExpenseTypeName);
+		$oPHPExcel->getActiveSheet()->setCellValue('G'.$i, $transaction->Condition);
 		$oPHPExcel->getActiveSheet()->setCellValue('H'.$i, $transaction->Amount);
 		$oPHPExcel->getActiveSheet()->setCellValue('I'.$i, $transaction->TaxAmount);
 
-
-		$dates = explode('-', $transaction->TransactionDate);
-		$monthYear = "(".$dates[1]."/".$dates[0].")";
-
-		$oPHPExcel->getActiveSheet()->setCellValue('AV72', $monthYear);
-		$oPHPExcel->getActiveSheet()->setCellValue('AV148', $monthYear);
-		$oPHPExcel->getActiveSheet()->setCellValue('AV22', $monthYear);
-		$oPHPExcel->getActiveSheet()->setCellValue('AV300', $monthYear);
-
-		$oPHPExcel->getActiveSheet()->setCellValue('AF51', number_format($transaction->Amount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AF127', number_format($transaction->Amount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AF203', number_format($transaction->Amount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AF279', number_format($transaction->Amount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AQ51', number_format($transaction->TaxAmount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AQ127', number_format($transaction->TaxAmount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AQ203', number_format($transaction->TaxAmount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AQ279', number_format($transaction->TaxAmount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AF55', number_format($transaction->Amount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AF131', number_format($transaction->Amount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AF203', number_format($transaction->Amount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AF283', number_format($transaction->Amount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AQ55', number_format($transaction->TaxAmount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AQ131', number_format($transaction->TaxAmount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AQ203', number_format($transaction->TaxAmount, 2));
-		$oPHPExcel->getActiveSheet()->setCellValue('AQ283', number_format($transaction->TaxAmount, 2));
-
-		if ($transaction->Condition == '1') {
-		    $oPHPExcel->getActiveSheet()->setCellValue('G62', 'X');
-		    $oPHPExcel->getActiveSheet()->setCellValue('G138', 'X');
-		    $oPHPExcel->getActiveSheet()->setCellValue('G214', 'X');
-		    $oPHPExcel->getActiveSheet()->setCellValue('G290', 'X');
-		}
-
-		if ($transaction->Condition == '3') {
-		    $oPHPExcel->getActiveSheet()->setCellValue('G66', 'X');
-		    $oPHPExcel->getActiveSheet()->setCellValue('G142', 'X');
-		    $oPHPExcel->getActiveSheet()->setCellValue('G218', 'X');
-		    $oPHPExcel->getActiveSheet()->setCellValue('G292', 'X');
-		}
-
-		$oWriter = PHPExcel_IOFactory::createWriter($oPHPExcel, 'Excel2007');
-		$oWriter->save($outputFile);
-
-		$data = array(
-		    'CreatedExcel  ' => 1
-		);
-		$this->transaction_model->update_created_excel($data, $transaction->TransactionID);
+		$i++;
 	    }
 
-	    $result = $this->displayWhtTable($startDate, $endDate, $customerId);
+	    $fileName = 'wht-summary-'.date("Y-m-d").'.xlsx';
+	    $outputFile = $outputPath.$fileName;
+
+	    $oWriter = PHPExcel_IOFactory::createWriter($oPHPExcel, 'Excel2007');
+	    $oWriter->save($outputFile);
+
+	    $result = $this->displaySummaryTable($startDate, $endDate, $customerId);
 
 	    echo $result;
 	}

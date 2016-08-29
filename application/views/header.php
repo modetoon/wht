@@ -59,10 +59,10 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-user fa-fw"></i>  
-                            <?php
-                            $CI = & get_instance();
-                            echo $CI->session->userdata('user_fullname_thai')
-                            ?>
+			    <?php
+				$CI = & get_instance();
+				echo $CI->session->userdata('user_fullname_thai')
+			    ?>
                             <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
@@ -109,18 +109,18 @@
                             </li>
 
                             <li class="active">
-                                <a href="<?php echo '#';//site_url('Report') ?>"><i class="fa fa-signal"></i> Report</a>
-								<ul class="nav nav-second-level">
-									<li>
-										<a href="<?php echo site_url('Report/whtCriteria') ?>">WHT Certificate</a>
-									</li>
-									<li>
-										<a href="<?php echo site_url('Report/summaryCriteria') ?>">Summary Report</a>
-									</li>
-									<li>
-										<a href="<?php echo site_url('Report/whtCriteria') ?>">Cancel/Re-Issuance</a>
-									</li>
-								</ul>
+                                <a href="<?php echo '#'; //site_url('Report')  ?>"><i class="fa fa-signal"></i> Report</a>
+				<ul class="nav nav-second-level">
+				    <li>
+					<a href="<?php echo site_url('Report/whtCriteria') ?>">WHT Certificate</a>
+				    </li>
+				    <li>
+					<a href="<?php echo site_url('Report/summaryCriteria') ?>">Summary Report</a>
+				    </li>
+				    <li>
+					<a href="<?php echo site_url('Report/whtCriteria') ?>">Cancel/Re-Issuance</a>
+				    </li>
+				</ul>
                             </li> 
 
                         </ul>
