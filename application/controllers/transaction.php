@@ -145,19 +145,15 @@
 		    );
 
 		    $this->customer_model->insert_data($data);
+		    
 		} else {
 		    $data = array();
-		    if ($customer->CustomerCode == "")
-			$data['CustomerCode'] = "$customerCode";
-		    if ($customer->FullNameThai == "")
-			$data['FulllNameThai'] = "$customerThaiName";
-		    if ($customer->FullNameEnglish == "")
-			$data['FullNameEnglish'] = "$customerEnglishName";
-		    if ($customer->Address == "")
-			$data['Address'] = "$address";
+		    if ($customer->CustomerCode == "") $data['CustomerCode'] = "$customerCode";
+		    if ($customer->FullNameThai == "") $data['FulllNameThai'] = "$customerThaiName";
+		    if ($customer->FullNameEnglish == "") $data['FullNameEnglish'] = "$customerEnglishName";
+		    if ($customer->Address == "") $data['Address'] = "$address";
 
-		    if (!empty($data))
-			$this->customer_model->update_data_by_customer_code($data, $customerCode);
+		    if (!empty($data)) $this->customer_model->update_data_by_customer_code($data, $customerCode);
 		}
 		// <----------------   End of Insert or Update Customer  -------------------->
 		// 
