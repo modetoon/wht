@@ -11,7 +11,7 @@
         <div class="col-lg-12 right">
             <p class="text-right">
                 <button type="button" class="btn btn-success text-right" onclick="window.location.href = '<?php echo site_url('customer/add'); ?>';">Add Customer</button>
-                <button type="button" class="btn btn-info text-right" onclick="window.location.href = '<?php echo site_url('Customer/importExcel'); ?>';">Import Transaction</button>
+                <button type="button" class="btn btn-info text-right" onclick="window.location.href = '<?php echo site_url('Customer/importExcel'); ?>';">Import Customer</button>
             </p>
         </div>
     </div>
@@ -35,7 +35,7 @@
                                     <th style="width:25%;">Thai Name</th>
                                     <th style="width:15%;">ID Card</th>
                                     <th style="width:15%;">Tax Number</th>
-                                    <th style="width:10%;">Action</th>
+                                     <th style="text-align:center;width:8%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,9 +48,8 @@
                                                 <td>'.$r->FullNameThai.'</td>
                                                 <td>'.$r->IDCard.'</td>
                                                 <td>'.$r->TaxNumber.'</td>
-                                                <td class="center">
-                                                    <a href="' . site_url("customer/edit/$r->CustomerID") . '" class="btn btn-warning btn-xs">Edit</a>&nbsp;
-                                                    <a href="' . site_url("customer/delete/$r->CustomerID") . '" class="btn btn-danger btn-xs">Delete</a>
+                                                <td  style="text-align:center;">
+                                                    <a href="' . site_url("customer/edit/$r->CustomerID") . '" class="btn btn-warning btn-xs">Edit</a>
                                                 </td>
                                             </tr>';
                                 }
@@ -96,7 +95,8 @@
                     $(document).ready(function () {
 
                         $('#ListTable').DataTable({
-                            responsive: true
+                            responsive: true,
+							"iDisplayLength": 100
                         });
 
                     });

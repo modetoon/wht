@@ -44,7 +44,7 @@ class User extends CI_Controller {
             $data['result'] = $result;
         }
 
-        $this->form_validation->set_rules('UserType', 'User Type', 'required');
+        //$this->form_validation->set_rules('UserType', 'User Type', 'required');
 
         if ($this->input->post('ID') != '') {
             $this->form_validation->set_rules('UserName', 'UserName', 'required|min_length[4]');
@@ -52,7 +52,7 @@ class User extends CI_Controller {
             $this->form_validation->set_rules('UserName', 'UserName', 'required|min_length[4]|is_unique[user.UserName]');
         }
         $this->form_validation->set_rules('Password', 'Password', 'required|min_length[6]');
-        $this->form_validation->set_rules('FullNameThai', 'FullNameThai', 'required|min_length[1]');
+        $this->form_validation->set_rules('FullName', 'FullName', 'required|min_length[1]');
         $this->form_validation->set_rules('Email', 'Email', 'required|valid_email|min_length[1]');
 
         if ($this->form_validation->run() === FALSE) {
@@ -64,7 +64,7 @@ class User extends CI_Controller {
                 'UserType' => $this->input->post('UserType'),
                 'UserName' => $this->input->post('UserName'),
                 'Password' => $this->input->post('Password'),
-                'FullNameThai' => $this->input->post('FullNameThai'),
+                'FullName' => $this->input->post('FullName'),
                 'Email' => $this->input->post('Email'),
                 'Status' => $this->input->post('Status')
             );

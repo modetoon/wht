@@ -15,8 +15,8 @@ class Login_model extends CI_Model {
     
     function get_data($username='')
     {
-
-        $this->db->where('UserName', $username);
+		$Status = 1;
+        $this->db->where('UserName', $username)->where('Status', $Status);
         $this->db->limit(1);
         return $this->db->get($this->table_name)->row();
     } 

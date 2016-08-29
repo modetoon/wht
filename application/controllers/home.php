@@ -19,13 +19,11 @@ class Home extends CI_Controller {
      * map to /index.php/welcome/<method_name>
      * @see http://codeigniter.com/user_guide/general/urls.html
      */
-    public function index() {
-        $this->load->helper('url');
-        $data = array('title' => 'Home');
 
-        $this->load->view('header', $data);
-        $this->load->view('dashboard');
+    public function index() {
+			redirect(site_url('transaction/lists'), 'refresh');
     }
+
 }
 
 /* End of file welcome.php */

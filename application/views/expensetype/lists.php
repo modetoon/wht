@@ -31,18 +31,21 @@
                                             <th>Expense Type Name</th>
                                             <th>WHT Type</th>
                                             <th>Percent</th>
-                                            <th>Action</th>
+                                            <th style="text-align:center;width:13%;">Active Status</th>
+                                            <th style="text-align:center;width:13%;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
                                         foreach($result as $r){
+											$Status = ($r->Status == 1) ? '<button type="button" class="btn btn-info btn-circle"><i class="fa fa-check"></i> </button>': '<button type="button" class="btn btn-warning btn-circle"><i class="fa fa-times"></i></button>';
                                             echo '<tr>
                                                 <td><input type="checkbox" value="'.$r->ExpenseTypeID.'"></td>
                                                 <td>'.$r->ExpenseTypeName.'</td>
                                                 <td>'.$r->Wht_Type.'</td>
                                                 <td>'.$r->Percent.' %</td>
-                                                <td class="center">
+                                                <td style="text-align:center;">'.$Status.'</td>
+                                                <td  style="text-align:center;">
                                                     <a href="'.site_url("expensetype/edit/$r->ExpenseTypeID").'" class="btn btn-warning btn-xs">Edit</a>&nbsp;
                                                     <a href="'.site_url("expensetype/delete/$r->ExpenseTypeID").'" class="btn btn-danger btn-xs">Delete</a>
                                                 </td>
@@ -90,7 +93,8 @@
     $(document).ready(function() {
 
         $('#ListTable').DataTable({
-                responsive: true
+                responsive: true,
+				"iDisplayLength": 20
         });
         
     });

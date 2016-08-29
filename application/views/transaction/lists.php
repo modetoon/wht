@@ -95,7 +95,8 @@
     $(document).ready(function () {
 
         $('#ListTable').DataTable({
-            responsive: true
+            responsive: true,
+			"iDisplayLength": 100
         });
 
     });

@@ -33,16 +33,28 @@
                                     <div class="col-lg-9">
                                         <select class="form-control" name="Type">
                                             <option value="">Please select
-                                            <option value="individual" <?php echo ((isset($result)) && ($result->Type == 'individual')) ? 'selected' : ''; ?>>บุคคลธรรมดา
-                                            <option value="corporation" <?php echo ((isset($result)) && ($result->Type == 'corporation')) ? 'selected' : ''; ?>>นิติบุคคล
+                                            <option value="1" <?php echo ((isset($result)) && ($result->Type == '1')) ? 'selected' : ''; ?>>บุคคลธรรมดา
+                                            <option value="2" <?php echo ((isset($result)) && ($result->Type == '2')) ? 'selected' : ''; ?>>นิติบุคคล
                                         </select>
                                     </div>
                                 </div>
-                            </div>                                    
+                            </div>            
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-lg-3"><label>FullName Thai</label></div>
+                                    <div class="col-lg-3"><label>Version</label></div>
+                                    <div class="col-lg-9"><input class="form-control" name="Version" value="<?php echo (isset($result)) ? $result->Version : set_value('Version'); ?>"></div>
+                                </div>
+                            </div>							
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-3"><label>Customer Name (TH)</label></div>
                                     <div class="col-lg-9"><input class="form-control" name="FullNameThai" value="<?php echo (isset($result)) ? $result->FullNameThai : set_value('FullNameThai'); ?>"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-3"><label>Customer Name (EN)</label></div>
+                                    <div class="col-lg-9"><input class="form-control" name="FullNameEnglish" value="<?php echo (isset($result)) ? $result->FullNameEnglish : set_value('FullNameEnglish'); ?>"></div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -77,8 +89,9 @@
                                     </div>
                                 </div>
                             </div> 
-
-                            <div class="form-group">
+							
+							<br />
+                            <!-- <div class="form-group">
                                 <label>Status</label>
                                 <label class="radio-inline">
                                     <input type="radio" name="Status" id="Status1" value="1" checked>Active
@@ -86,10 +99,10 @@
                                 <label class="radio-inline">
                                     <input type="radio" name="Status" id="Status2" value="0" <?php echo ((isset($result)) && ($result->Status == 0)) ? "checked" : ""; ?>>UnActive
                                 </label>
-                            </div>
+                            </div> -->
 
                             <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="reset" class="btn btn-default">Reset</button>
+                            <button type="button" class="btn btn-default" onclick="window.location.href='<?php echo site_url('customer/lists');?>';">Back</button>
                             <?php echo form_close(); ?>
                         </div>
                         <!-- /.col-lg-6 (nested) -->

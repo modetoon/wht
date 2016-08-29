@@ -36,6 +36,12 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
+                                                <div class="col-lg-3"><label>WHT Type</label></div>
+                                                <div class="col-lg-9"><input class="form-control" name="Wht_Type" value="<?php echo (isset($result)) ? $result->Wht_Type: set_value('Wht_Type'); ?>"><?php //echo form_error('menuname_en'); ?></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
                                                 <div class="col-lg-3"><label>Percent</label></div>
                                                 <div class="col-lg-9"><input class="form-control" name="Percent" value="<?php 
                                                     echo (isset($result)) ? $result->Percent: set_value('Percent'); ?>"></div>
@@ -43,18 +49,21 @@
                                         </div> 
 
                                         <div class="form-group">
-                                            <label>Status</label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="Status" id="Status1" value="1" checked>Active
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="Status" id="Status2" value="0" <?php 
-                                                    echo ((isset($result)) && ($result->Status == 0)) ? "checked": ""; ?>>UnActive
-                                            </label>
+											<div class="row">
+                                            <div class="col-lg-3"><label>Active Status</label></div>
+                                            <div class="col-lg-9"><label class="radio-inline">
+														<input type="radio" name="Status" id="Status1" value="1" checked>Active
+													</label>
+													<label class="radio-inline">
+														<input type="radio" name="Status" id="Status2" value="0" <?php 
+															echo ((isset($result)) && ($result->Status == 0)) ? "checked": ""; ?>>InActive
+													</label>
+											</div>
                                         </div>
+										<br />
 
                                         <button type="submit" class="btn btn-primary">Save</button>
-                                        <button type="reset" class="btn btn-default">Reset</button>
+                                        <button type="button" class="btn btn-default" onclick="window.location.href='<?php echo site_url('expensetype/lists');?>';">Back</button>
                                     <?php echo form_close(); ?>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->

@@ -36,7 +36,7 @@ class Customer extends CI_Controller {
 
     public function add($id = '') {
         $this->load->model('Customer_model');
-        $data['title'] = 'Add Customer';
+        $data['title'] = 'Add/Edit Customer';
 
         $selected = '';
         $selected2 = '';
@@ -45,12 +45,12 @@ class Customer extends CI_Controller {
             $data['result'] = $result;
         }
 
-        $this->form_validation->set_rules('Type', 'Customer Type', 'required');
-        $this->form_validation->set_rules('FullNameThai', 'FullNameThai', 'required|min_length[3]');
-        $this->form_validation->set_rules('IDCard', 'ID Card', 'required|exact_length[13]');
-        $this->form_validation->set_rules('TaxNumber', 'Tax Number', 'required|min_length[1]');
-        $this->form_validation->set_rules('Email', 'Email', 'required|valid_email|min_length[5]');
-        $this->form_validation->set_rules('Phone', 'Phone', 'required');
+        //$this->form_validation->set_rules('Type', 'Customer Type', 'required');
+        $this->form_validation->set_rules('FullNameThai', 'Customer Name (TH)', 'required|min_length[3]');
+        //$this->form_validation->set_rules('IDCard', 'ID Card', 'required|exact_length[13]');
+        //$this->form_validation->set_rules('TaxNumber', 'Tax Number', 'required|min_length[1]');
+        //$this->form_validation->set_rules('Email', 'Email', 'required|valid_email|min_length[5]');
+        //$this->form_validation->set_rules('Phone', 'Phone', 'required');
         $this->form_validation->set_rules('Address', 'Address', 'min_length[5]');
 
         if ($this->form_validation->run() === FALSE) {
@@ -68,8 +68,7 @@ class Customer extends CI_Controller {
                     'Phone' => $this->input->post('Phone'),
                     'Address' => $this->input->post('Address'),
                     'CreatedDate' => date('Y-m-d'),
-                    'CreatedBy' => $this->session->userdata('user_name'),
-                    'Status' => $this->input->post('Status')
+                    'CreatedBy' => $this->session->userdata('user_name')
                 );
                 $result = $this->Customer_model->insert_data($data_insert);
             } else {
@@ -82,8 +81,7 @@ class Customer extends CI_Controller {
                     'Phone' => $this->input->post('Phone'),
                     'Address' => $this->input->post('Address'),
                     'UpdatedDate' => date('Y-m-d'),
-                    'UpdatedBy' => $this->session->userdata('user_name'),
-                    'Status' => $this->input->post('Status')
+                    'UpdatedBy' => $this->session->userdata('user_name')
                 );
                 $result = $this->Customer_model->update_data($data_insert, $this->input->post('ID'));
             }
@@ -98,7 +96,7 @@ class Customer extends CI_Controller {
     }
 
     public function importExcel() {
-        $data['title'] = 'Import Transaction from Excel';
+        $data['title'] = 'Import Customer from Excel';
         $this->load->view('header', $data);
         $this->load->view('customer/import_excel', $data);
     }

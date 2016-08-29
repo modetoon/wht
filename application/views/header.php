@@ -66,11 +66,11 @@
                             <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            <!-- <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                             </li>
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                             </li>
-                            <li class="divider"></li>
+                            <li class="divider"></li> -->
                             <li><a href="<?php echo site_url('logoff'); ?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
@@ -109,10 +109,18 @@
                             </li>
 
                             <li class="active">
-                                <a href="<?php echo site_url('transaction/importExcel') ?>"
-                            </li>
-                            <li class="active">
-                                <a href="<?php echo site_url('Report') ?>"><i class="fa fa-signal"></i> Report</a>
+                                <a href="<?php echo '#';//site_url('Report') ?>"><i class="fa fa-signal"></i> Report</a>
+								<ul class="nav nav-second-level">
+									<li>
+										<a href="<?php echo site_url('Report/whtCriteria') ?>">WHT Certificate</a>
+									</li>
+									<li>
+										<a href="<?php echo site_url('Report/summaryCriteria') ?>">Summary Report</a>
+									</li>
+									<li>
+										<a href="<?php echo site_url('Report/whtCriteria') ?>">Cancel/Re-Issuance</a>
+									</li>
+								</ul>
                             </li> 
 
                         </ul>
