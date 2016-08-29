@@ -15,6 +15,7 @@
 		$sql = "SELECT * FROM " . $this->table_name . " ORDER BY " . $ordering;
 	    }
 	    $query = $this->db->query($sql);
+	    
 	    return $query->result();
 	}
 	public function get_data($id) {

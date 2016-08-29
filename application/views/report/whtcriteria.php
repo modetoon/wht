@@ -32,6 +32,7 @@
 			    <div class="col-lg-6">
 				<select class="form-control" id="customer_id" name="customer_id">
 				    <option value="0">Please select customer</option>
+				    <option value="All">All Customers</option>
 				    <?php
 					foreach($oCustomers as $oCustomer) {
 					    echo "<option value='".$oCustomer->CustomerID."'>".$oCustomer->CustomerCode." : ".$oCustomer->FullNameThai."</option>";

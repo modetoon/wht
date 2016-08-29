@@ -32,7 +32,7 @@
 			    <div class="col-lg-6">
 				<select class="form-control" id="customer_id" name="customer_id">
 				    <option value="0">Please select customer</option>
-				    <option value="1">All Customers</option>
+				    <option value="All">All Customers</option>
 				    <?php
 					foreach($oCustomers as $oCustomer) {
 					    echo "<option value='".$oCustomer->CustomerID."'>".$oCustomer->CustomerCode." : ".$oCustomer->FullNameThai."</option>";
@@ -100,7 +100,7 @@
             $('#search').click(function () {
                 $.ajax({
                     type : "post",
-                    url : "<?php echo base_url('Report/sumaryList') ?>",
+                    url : "<?php echo base_url('Report/summaryList') ?>",
                     data : {
                         start_date : $("#start_date").val(),
                         end_date : $("#end_date").val(),

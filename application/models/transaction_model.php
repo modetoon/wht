@@ -138,21 +138,21 @@
 	public function get_summary_data_by_customer($startDate, $endDate, $customerId) {
 	    $sql = "
 			SELECT		t.CustomerID, t.Amount, t.TaxAmount,
-					c.FullNameThai, c.IDCard, c.CustomerCode
+					c.FullNameThai, c.IDCard, c.CustomerCode,
+					t.DocNo, t.TransactionDate
 			FROM		transaction t
 			JOIN		customer c on c.CustomerID = t.CustomerID
 			WHERE		t.TransactionDate >= '".$startDate."' AND t.TransactionDate <= '".$endDate."'
 	    ";
 	    
-	    if ($customerId != 1) $sql .= "	AND		t.CustomerID = ". $customerId;
+	    if ($customerId != 'All') $sql .= "	AND		t.CustomerID = ". $customerId;
 			
 	    $sql .= "
-			GROUP BY	t.CustomerID
 			ORDER BY	c.FullNameThai
 	    ";
 	    
-	    $query = $this->db->query($sql);
-	    
+	    $query = $this->db->query($sql);	
+
 	    return $query->result();
 	}
 	public function update_created_excel($data, $transactionId) {
