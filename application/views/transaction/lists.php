@@ -99,7 +99,7 @@
 
         $('#ListTable').DataTable({
             responsive: true,
-			"iDisplayLength": 10
+			"iDisplayLength": 100
         });
 
     });
