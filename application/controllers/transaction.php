@@ -39,19 +39,19 @@
 	    $selected = '';
 	    $selected2 = '';
 	    if ($id != '') {
-			$result = $this->Transaction_model->get_data($id);
-			$data['result'] = $result;
-			$selected = $result->CustomerID;
-			$selected2 = $result->ExpenseTypeID;
-			$data['Condition'] = $result->Condition;
+		$result = $this->Transaction_model->get_data($id);
+		$data['result'] = $result;
+		$selected = $result->CustomerID;
+		$selected2 = $result->ExpenseTypeID;
+		$data['Condition'] = $result->Condition;
 	    } else {
-			$data['DocNo'] = $this->Transaction_model->get_docno($id);
+		$data['DocNo'] = $this->Transaction_model->get_docno($id);
 	    }
 	    if ($this->input->post('CustomerID') != '') {
-			$selected = $this->input->post('CustomerID');
+		$selected = $this->input->post('CustomerID');
 	    }
 	    if ($this->input->post('ExpenseTypeID') != '') {
-			$selected2 = $this->input->post('ExpenseTypeID');
+		$selected2 = $this->input->post('ExpenseTypeID');
 	    }
 
 	    $customer_menu = $this->Transaction_model->get_customer_dd($selected);
@@ -70,36 +70,36 @@
 	    $this->form_validation->set_rules('Condition', 'Condition', 'required');
 
 	    if ($this->form_validation->run() === FALSE) {
-				$data['CustomerID'] = $this->input->post('CustomerID');
-				$data['Condition'] = $this->input->post('Condition');
-				$this->load->view('header', $data);
-				$this->load->view('transaction/add', $data);
+		$data['CustomerID'] = $this->input->post('CustomerID');
+		$data['Condition'] = $this->input->post('Condition');
+		$this->load->view('header', $data);
+		$this->load->view('transaction/add', $data);
 	    } else {
-				$arrExpense = explode('|', $this->input->post('ExpenseTypeID'));
-				$data_insert = array(
-					'DocNo' => $this->input->post('DocNo'),
-					'CustomerID' => $this->input->post('CustomerID'),
-					'TransactionDate' => $this->input->post('TransactionDate'),
-					'Amount' => $this->input->post('Amount'),	
-					'TaxAmount' => $this->input->post('TaxAmount'),
-					'NetAmount' => $this->input->post('NetAmount'),
-					'ExpenseTypeID' => $arrExpense[0],
-					'TaxPercent' => $arrExpense[1],
-					'Condition' => $this->input->post('Condition'),
-					'Remark' => $this->input->post('Remark'),
-					'Status' => $this->input->post('Status')
-				);
-				/*echo '<pre>';
-				print_r($data_insert);
-				echo '</pre>';
-				die;*/
-				if ($this->input->post('ID') == '') {
-					$result = $this->Transaction_model->insert_data($data_insert);
-				} else {
-					$result = $this->Transaction_model->update_data($data_insert, $this->input->post('ID'));
-				}
+		$arrExpense = explode('|', $this->input->post('ExpenseTypeID'));
+		$data_insert = array(
+		    'DocNo' => $this->input->post('DocNo'),
+		    'CustomerID' => $this->input->post('CustomerID'),
+		    'TransactionDate' => $this->input->post('TransactionDate'),
+		    'Amount' => $this->input->post('Amount'),
+		    'TaxAmount' => $this->input->post('TaxAmount'),
+		    'NetAmount' => $this->input->post('NetAmount'),
+		    'ExpenseTypeID' => $arrExpense[0],
+		    'TaxPercent' => $arrExpense[1],
+		    'Condition' => $this->input->post('Condition'),
+		    'Remark' => $this->input->post('Remark'),
+		    'Status' => $this->input->post('Status')
+		);
+		/* echo '<pre>';
+		  print_r($data_insert);
+		  echo '</pre>';
+		  die; */
+		if ($this->input->post('ID') == '') {
+		    $result = $this->Transaction_model->insert_data($data_insert);
+		} else {
+		    $result = $this->Transaction_model->update_data($data_insert, $this->input->post('ID'));
+		}
 
-				redirect(site_url('transaction/lists'), 'refresh');
+		redirect(site_url('transaction/lists'), 'refresh');
 	    }
 	}
 	public function delete($id = '') {
@@ -123,7 +123,11 @@
 	    for($row = 2; $row <= $maxRow; $row++) {
 		$rowData = $sheet->rangeToArray('A'.$row.':'.$maxColumn.$row, NULL, TRUE, FALSE);
 
-		if (!empty($rowData)) {
+		if (($rowData[0][0] == '') and ( $rowData[0][1] == '') and ( $rowData[0][2] == '') and ( $rowData[0][3] == '')
+			and ( $rowData[0][4] == '') and ( $rowData[0][5] == '') and ( $rowData[0][6] == '')
+			and ( $rowData[0][7] == '') and ( $rowData[0][8] == '')) {
+		    
+		} else {
 		    $customerCode = $rowData[0][0];
 		    $customerThaiName = $rowData[0][1];
 		    $date = date($format = "Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($rowData[0][2]));
@@ -196,7 +200,8 @@
 			"NetAmount" => $amount,
 			"ExpenseTypeID" => $expenseTypeId,
 			"TaxPercent" => $taxPercent,
-			"Condition" => $condition
+			"Condition" => $condition,
+			"Remark" => $remark
 		    );
 
 		    $this->Transaction_model->insert_data($data);
