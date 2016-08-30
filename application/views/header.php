@@ -117,9 +117,6 @@
 				    <li>
 					<a href="<?php echo site_url('Report/summaryCriteria') ?>">Summary Report</a>
 				    </li>
-				    <li>
-					<a href="<?php echo site_url('Report/whtCriteria') ?>">Cancel/Re-Issuance</a>
-				    </li>
 				</ul>
                             </li> 
 
