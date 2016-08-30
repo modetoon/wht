@@ -31,22 +31,25 @@
                             <thead>
                                 <tr>
                                     <th style="width:13%;">PYMT DOC./ID</th>
-                                    <th style="width:25%;">Customer</th>
+                                    <th>Customer</th>
                                     <th style="width:15%;">Transaction Date</th>
                                     <th style="width:10%;">Amount</th>
                                     <th style="width:12%;">WHT Tax</th>
+                                    <th style="width:8%;">Cancel<br />Status</th>
                                     <th style="width:10%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 foreach ($result as $r) {
+									$Status = ($r->Status == 1) ? '': 'Cancel';
                                     echo '<tr>
                                                 <td>' . $r->DocNo . '</td>
                                                 <td>' . get_customer_name($r->CustomerID) . '</td>
                                                 <td>' . $r->TransactionDate . '</td>
                                                 <td>' . number_format($r->Amount, 2) . '</td>
                                                 <td>' . number_format(($r->Amount - $r->NetAmount), 2) . '</td>
+                                                <td>' . $Status . '</td>
                                                 <td class="center">
                                                     <a href="' . site_url("transaction/edit/$r->TransactionID") . '" class="btn btn-warning btn-xs">Edit</a>&nbsp;
                                                     <a href="' . site_url("transaction/delete/$r->TransactionID") . '" class="btn btn-danger btn-xs">Delete</a>
@@ -96,7 +99,7 @@
 
         $('#ListTable').DataTable({
             responsive: true,
-			"iDisplayLength": 100
+			"iDisplayLength": 10
         });
 
     });

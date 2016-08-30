@@ -1,4 +1,35 @@
-(isset($result)) ? $result->DocNo: $DocNo; ?>" readonly></div>
+         <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"><?php echo $title;?></h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <?php echo $title;?>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-8">
+
+                                        <?php $error =  validation_errors(); 
+                                            if($error){
+                                                echo '<div class="alert alert-danger">'.$error.'</div>';
+                                            }
+                                        ?>
+
+                                        <?php echo form_open('transaction/add') ?>
+
+                                        <input type="hidden" name="ID" value="<?php echo (isset($result)) ? $result->TransactionID: ''; ?>">
+
+                                       <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-3"><label>PYMT DOC./ID.</label></div>
+                                                <div class="col-lg-9"><input class="form-control" name="DocNo" value="<?php echo (isset($result)) ? $result->DocNo: $DocNo; ?>" readonly></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -17,18 +48,19 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
-                                                <div class="col-lg-3"><label>Amount<br />(จำนวนเงินที่ต้องจ่าย Excl Vat)</label></div>
-                                                <div class="col-lg-9"><input class="form-control" name="AmountExclVat" id="AmountExclVat" value="<?php echo (isset($result)) ? $result->AmountExclVat: set_value('AmountExclVat'); ?>"></div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="row">
                                                 <div class="col-lg-3"><label>Expense Type</label></div>
                                                 <div class="col-lg-9">
 													<?php echo $expensetype_dropdownlist;?>
 												</div>
                                             </div>
                                         </div> 
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-3"><label>Amount (จำนวนเงิน<br />ที่ต้องจ่าย Excl Vat)</label></div>
+                                                <div class="col-lg-9"><input class="form-control" name="NetAmount" id="NetAmount" value="<?php echo (isset($result)) ? $result->NetAmount: set_value('NetAmount'); ?>"></div>
+                                            </div>
+                                        </div>
+
                                         <!-- <div class="form-group">
                                             <div class="row">
                                                 <div class="col-lg-3"><label>Tax (%)</label></div>
@@ -37,30 +69,61 @@
                                         </div> -->
                                         <div class="form-group">
                                             <div class="row">
-                                                <div class="col-lg-3"><label>Amount<br />(จำนวนเงินที่ต้องจ่าย Incl Vat)</label></div>
-                                                <div class="col-lg-9"><input class="form-control" name="AmountInclVat" id="AmountInclVat" value="<?php echo (isset($result)) ? $result->AmountInclVat: set_value('AmountInclVat'); ?>" readonly></div>
+                                                <div class="col-lg-3"><label>WHT Amount</label></div>
+                                                <div class="col-lg-9"><input class="form-control" name="TaxAmount" id="TaxAmount" value="<?php echo (isset($result)) ? $result->TaxAmount: set_value('TaxAmount'); ?>"></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
-                                                <div class="col-lg-3"><label>Overhead</label></div>
+                                                <div class="col-lg-3"><label>Amount (จำนวนเงิน<br />ที่ต้องจ่าย Incl Vat)</label></div>
+                                                <div class="col-lg-9"><input class="form-control" name="Amount" id="Amount" value="<?php echo (isset($result)) ? $result->Amount: set_value('Amount'); ?>" readonly></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-3"><label>Condition</label></div>
                                                 <div class="col-lg-9">
-														<select class="form-control" name="Overhead">
+														<select class="form-control" name="Condition">
 														<option value="">Please select
 															<?php if(isset($result)){?>
-																	<option value="deducted" <?php echo ((isset($result)) && ($result->OverHead == 'deducted')) ? 'selected': ''; ?>>Deducted Witholding Tax
-																	<option value="absorbed" <?php echo ((isset($result)) && ($result->OverHead == 'absorbed')) ? 'selected': ''; ?>>Absorbed Witholding Tax
+																	<option value="1" <?php echo ((isset($result)) && ($result->Condition == '1')) ? 'selected': ''; ?>>Deducted Witholding Tax
+																	<option value="3" <?php echo ((isset($result)) && ($result->Condition == '3')) ? 'selected': ''; ?>>Absorbed Witholding Tax
 															<?php }else{?>
-																	<option value="deducted" <?php echo ((isset($Overhead)) && ($Overhead == 'deducted')) ? 'selected': ''; ?>>Deducted Witholding Tax
-																	<option value="absorbed" <?php echo ((isset($Overhead)) && ($Overhead == 'absorbed')) ? 'selected': ''; ?>>Absorbed Witholding Tax
+																	<option value="1" <?php echo ((isset($Condition)) && ($Condition == '1')) ? 'selected': ''; ?>>Deducted Witholding Tax
+																	<option value="3" <?php echo ((isset($Condition)) && ($Condition == '3')) ? 'selected': ''; ?>>Absorbed Witholding Tax
 															<?php }?>
 														</select>
 												</div>
                                             </div>
                                         </div> 
 
+										<div class="form-group">
+											<div class="row">
+												<div class="col-lg-3"><label>Remark</label></div>
+												<div class="col-lg-9">
+													<textarea class="form-control" name="Remark" rows="3"><?php echo (isset($result)) ? $result->Remark : set_value('Remark'); ?></textarea>
+												</div>
+											</div>
+										</div> 
+
+                                        <div class="form-group">
+                                            <div class="row">
+											<div class="col-lg-3"><label>Cancel Status</label></div>
+                                            <div class="col-lg-9">
+												<label class="radio-inline">
+													<input type="radio" name="Status" id="Status1" value="1" checked>No
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="Status" id="Status2" value="0" <?php 
+														echo ((isset($result)) && ($result->Status == 0)) ? "checked": ""; ?>>Yes
+												</label>
+											</div>
+                                        </div>
+
+										<br /><br />
+
                                         <button type="submit" class="btn btn-primary">Save</button>
-                                        <button type="reset" class="btn btn-default">Reset</button>
+                                        <button type="button" class="btn btn-default" onclick="window.history.go(-1);">Back</button>
                                     <?php echo form_close(); ?>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->

@@ -34,24 +34,24 @@
 	}
 	public function add($id = '') {
 	    $this->load->model('Transaction_model');
-	    $data['title'] = 'Add Transaction';
+	    $data['title'] = 'Add/Edit Transaction';
 
 	    $selected = '';
 	    $selected2 = '';
 	    if ($id != '') {
-		$result = $this->Transaction_model->get_data($id);
-		$data['result'] = $result;
-		$selected = $result->CustomerID;
-		$selected2 = $result->ExpenseTypeID;
-		$data['Overhead'] = $result->OverHead;
+			$result = $this->Transaction_model->get_data($id);
+			$data['result'] = $result;
+			$selected = $result->CustomerID;
+			$selected2 = $result->ExpenseTypeID;
+			$data['Condition'] = $result->Condition;
 	    } else {
-		$data['DocNo'] = $this->Transaction_model->get_docno($id);
+			$data['DocNo'] = $this->Transaction_model->get_docno($id);
 	    }
 	    if ($this->input->post('CustomerID') != '') {
-		$selected = $this->input->post('CustomerID');
+			$selected = $this->input->post('CustomerID');
 	    }
 	    if ($this->input->post('ExpenseTypeID') != '') {
-		$selected2 = $this->input->post('ExpenseTypeID');
+			$selected2 = $this->input->post('ExpenseTypeID');
 	    }
 
 	    $customer_menu = $this->Transaction_model->get_customer_dd($selected);
@@ -63,36 +63,43 @@
 	    $this->form_validation->set_rules('DocNo', 'Document No', 'required');
 	    $this->form_validation->set_rules('CustomerID', 'Customer', 'required');
 	    $this->form_validation->set_rules('TransactionDate', 'Transaction Date', 'required');
-	    $this->form_validation->set_rules('AmountExclVat', 'Amount Excl Vat', 'required|min_length[1]');
+	    $this->form_validation->set_rules('NetAmount', 'Amount (จำนวนเงินที่ต้องจ่าย Excl Va', 'required|min_length[1]');
 	    $this->form_validation->set_rules('ExpenseTypeID', 'Expense Type', 'required');
 	    //$this->form_validation->set_rules('TaxPercent', 'Tax (%)', 'required|integer');										
-	    $this->form_validation->set_rules('AmountInclVat', 'Amount Incl Vat', 'required');
-	    $this->form_validation->set_rules('Overhead', 'Overhead', 'required');
+	    $this->form_validation->set_rules('Amount', 'Amount (จำนวนเงินที่ต้องจ่าย Incl Vat)', 'required');
+	    $this->form_validation->set_rules('Condition', 'Condition', 'required');
 
 	    if ($this->form_validation->run() === FALSE) {
-		$data['CustomerID'] = $this->input->post('CustomerID');
-		$data['Overhead'] = $this->input->post('Overhead');
-		$this->load->view('header', $data);
-		$this->load->view('transaction/add', $data);
+				$data['CustomerID'] = $this->input->post('CustomerID');
+				$data['Condition'] = $this->input->post('Condition');
+				$this->load->view('header', $data);
+				$this->load->view('transaction/add', $data);
 	    } else {
-		$arrExpense = explode('|', $this->input->post('ExpenseTypeID'));
-		$data_insert = array(
-		    'DocNo' => $this->input->post('DocNo'),
-		    'CustomerID' => $this->input->post('CustomerID'),
-		    'TransactionDate' => $this->input->post('TransactionDate'),
-		    'AmountExclVat' => $this->input->post('AmountExclVat'),
-		    'ExpenseTypeID' => $arrExpense[0],
-		    'TaxPercent' => $arrExpense[1],
-		    'AmountInclVat' => $this->input->post('AmountInclVat'),
-		    'OverHead' => $this->input->post('Overhead')
-		);
-		if ($this->input->post('ID') == '') {
-		    $result = $this->Transaction_model->insert_data($data_insert);
-		} else {
-		    $result = $this->Transaction_model->update_data($data_insert, $this->input->post('ID'));
-		}
+				$arrExpense = explode('|', $this->input->post('ExpenseTypeID'));
+				$data_insert = array(
+					'DocNo' => $this->input->post('DocNo'),
+					'CustomerID' => $this->input->post('CustomerID'),
+					'TransactionDate' => $this->input->post('TransactionDate'),
+					'Amount' => $this->input->post('Amount'),	
+					'TaxAmount' => $this->input->post('TaxAmount'),
+					'NetAmount' => $this->input->post('NetAmount'),
+					'ExpenseTypeID' => $arrExpense[0],
+					'TaxPercent' => $arrExpense[1],
+					'Condition' => $this->input->post('Condition'),
+					'Remark' => $this->input->post('Remark'),
+					'Status' => $this->input->post('Status')
+				);
+				/*echo '<pre>';
+				print_r($data_insert);
+				echo '</pre>';
+				die;*/
+				if ($this->input->post('ID') == '') {
+					$result = $this->Transaction_model->insert_data($data_insert);
+				} else {
+					$result = $this->Transaction_model->update_data($data_insert, $this->input->post('ID'));
+				}
 
-		redirect(site_url('transaction/lists'), 'refresh');
+				redirect(site_url('transaction/lists'), 'refresh');
 	    }
 	}
 	public function delete($id = '') {

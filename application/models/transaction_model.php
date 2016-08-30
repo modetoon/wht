@@ -30,7 +30,7 @@
 	}
 	public function update_data($data, $id) {
 	    $this->db->where($this->primary_key, $id);
-	    $this->db->update($this->table_name, $data);
+	    $res = $this->db->update($this->table_name, $data);
 	}
 	public function get_customer_dd($selected = '') {
 	    $this->db->order_by('FullNameThai', 'asc');
