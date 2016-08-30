@@ -206,7 +206,7 @@
 	    foreach($oTransactions as $oTransaction) {
 		$fileName = 'wht-'.$oTransaction->CustomerCode.'-'.$oTransaction->TransactionDate.'.xlsx';
 		$excelUrl = base_url('print_wht'.'/'.$fileName);
-		
+
 		$excelFile = $outputPath.$fileName;
 
 		$i++;
@@ -270,25 +270,6 @@
 	    echo $result;
 	}
 	public function displaySummaryTable($startDate, $endDate, $customerId) {
-	    $result = '
-		    <div class="col-lg-12">
-			<div class="panel panel-default">
-			    <div class="panel-body">
-				<div class="dataTable_wrapper">
-				    <table class="table table-striped table-bordered table-hover" id="ListTable">
-					<thead>
-					    <tr>
-						<th style="width:  1%; text-align: center">No</th>
-						<th style="width: 25%; text-align: center">Customer</th>
-						<th style="width: 10%; text-align: center">Tax Amount</th>
-						<th style="width:  5%; text-align: center">DocNo</th>
-						<th style="width:  5%; text-align: center">Date</th>
-						<th style="width:  5%; text-align: center">Amount</th>
-						<th style="width:  7%; text-align: center">Tax Amount</th>
-					    </tr>
-					</thead>
-					<tbody>
-	    ';
 
 	    $oTransactions = $this->transaction_model->get_summary_data_by_customer($startDate, $endDate, $customerId);
 
@@ -306,11 +287,39 @@
 	    $i = 0;
 	    $totalAmount = 0;
 	    $totalTaxAmount = 0;
-	    foreach($oTransactions as $oTransaction) {
-		$fileName = 'wht-'.$oTransaction->CustomerCode.'.xlsx';
-		$excelUrl = base_url('print_summary'.'/'.$fileName);
-		$excelFile = $outputPath.$fileName;
+	    
+	    $fileName = 'wht-summary-'.$customerId.'.xlsx';
+	    $excelUrl = base_url('print_summary'.'/'.$fileName);
+	    $excelFile = $outputPath.$fileName;
 
+	    $result = '';
+	    if (file_exists($excelFile)) {
+		$result = 'Download File&nbsp;&nbsp;<a href="'.$excelUrl.'"><i class="btn btn-success fa fa-file-excel-o" style="cursor: grab;" aria-hidden="true"></i></a>';
+	    } else {
+		$result = 'No file is available to download. You need to press Gen Excel';
+	    }
+
+	    $result = '
+		    <div class="col-lg-12">
+			<div class="panel panel-default">
+			    <div class="panel-body">
+				<div class="text-right">'.$result.'</div>
+				<div class="dataTable_wrapper">
+				    <table class="table table-striped table-bordered table-hover" id="ListTable">
+					<thead>
+					    <tr>
+						<th style="width:  1%; text-align: center">No</th>
+						<th style="width: 25%; text-align: center">Customer</th>
+						<th style="width: 10%; text-align: center">Tax Amount</th>
+						<th style="width:  5%; text-align: center">DocNo</th>
+						<th style="width:  5%; text-align: center">Date</th>
+						<th style="width:  5%; text-align: center">Amount</th>
+						<th style="width:  7%; text-align: center">Tax Amount</th>
+					    </tr>
+					</thead>
+					<tbody>
+	    ';
+	    foreach($oTransactions as $oTransaction) {
 		$i++;
 		$totalAmount += $oTransaction->Amount;
 		$totalTaxAmount += $oTransaction->TaxAmount;
@@ -416,7 +425,7 @@
 
 
 
-	    $fileName = 'wht-summary-'.date("Y-m-d").'.xlsx';
+	    $fileName = 'wht-summary-'.$customerId.'.xlsx';
 	    $outputFile = $outputPath.$fileName;
 
 	    $oWriter = PHPExcel_IOFactory::createWriter($oPHPExcel, 'Excel2007');
@@ -427,3 +436,4 @@
 	    echo $result;
 	}
     }
+    

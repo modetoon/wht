@@ -141,7 +141,7 @@
 	public function get_summary_data_by_customer($startDate, $endDate, $customerId) {
 	    $sql = "
 			SELECT		t.CustomerID, t.Amount, t.TaxAmount, t.Condition, t.DocNo, t.TransactionDate,
-					c.FullNameThai, c.TaxNumber, c.CustomerCode, c.Address,
+					c.FullNameThai, c.TaxNumber, c.CustomerCode, c.Address, c.CustomerCode,
 					e.ExpenseTypeName
 			FROM		transaction t
 			JOIN		customer c on c.CustomerID = t.CustomerID
