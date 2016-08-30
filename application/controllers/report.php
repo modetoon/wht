@@ -294,9 +294,9 @@
 
 	    $result = '';
 	    if (file_exists($excelFile)) {
-		$result = 'Download File&nbsp;&nbsp;<a href="'.$excelUrl.'"><i class="btn btn-success fa fa-file-excel-o" style="cursor: grab;" aria-hidden="true"></i></a>';
+		$result = '<strong>Download File&nbsp;&nbsp;</strong><a href="'.$excelUrl.'"><i class="btn btn-success fa fa-file-excel-o" style="cursor: grab;" aria-hidden="true"></i></a>';
 	    } else {
-		$result = 'No file is available to download. You need to press Gen Excel';
+		$result = '<strong>No file is available to download. You need to press Gen Excel.</strong>';
 	    }
 
 	    $result = '
